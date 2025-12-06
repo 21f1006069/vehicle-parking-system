@@ -1,0 +1,124 @@
+body {
+  background-color: #f5f5f5;
+  justify-content: center;
+}
+.container {
+  max-width: 500px;
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px #ccc;
+}
+
+.parking_lot {
+    border: 10px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px auto;
+    width: 25vw;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: beige;
+}
+
+.spot {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.occupied, .available {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 5px;
+    font-weight: bold;
+    color: white;
+  }
+
+.available { background-color: lightgreen; border: 2px solid green; }
+.occupied { background-color: pink; border: 2px solid red; }
+
+.available, .occupied {
+  cursor: pointer;
+}
+
+.btn_add_lot {
+  background-color: bisque;
+}
+
+.delete-confirmation-box {
+  margin: 150px auto 20px auto;
+  border: 20px red;
+  padding: 30px;
+  width: 30vw;
+  box-shadow: 10px 5px 5px red;
+  /* box-shadow: 0 0 2px 2px red;  */
+  border-radius: 10px;
+  background-color:beige;
+}
+
+.view-Spot {
+  background-color: beige;
+  margin: 150px auto 20px auto;
+  border: 20px rgb(50, 48, 48);
+  padding: 20px;
+  width: 25vw;
+  box-shadow: 10px 5px 5px rgb(77, 76, 76);
+  /* box-shadow: 0 0 2px 2px red;  */
+  border-radius: 10px;
+  font-weight: bold;
+  align-items: center;
+}
+
+.title {
+      background-color: #393E46;
+      border: 2px solid black;
+      /* border-radius: 10px; */
+      text-align: center;
+      padding: 20px;
+      font-weight: bold;
+      font-size: 25px;
+      margin-bottom: 20px;
+      color: #EEEEEE;
+    }
+
+.table-css{
+  margin: 50px;
+  justify-content: center;
+  width: 90vw;
+  border: 2px solid black;
+}
+
+.search_location span {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+     /* space between text and input */
+}
+
+.search_location p {
+    margin: 0; /* remove default margin */
+}
+
+.center-wrapper {
+    display: flex;
+    justify-content: center;        /* center horizontally */
+    align-items: center;            /* center vertically */
+}
+
+.form-container {
+      max-width: 450px;
+      margin: 60px auto;
+      padding: 30px;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+.form-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #333;
+}

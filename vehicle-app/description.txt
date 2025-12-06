@@ -1,0 +1,121 @@
+Author:
+
+  Name: Ganesh Venkata Surya Puppala
+  Roll No: 21f1006069
+  Email: 21f1006069@ds.study.iitm.ac.in
+
+Short Intro:
+
+  Hi, I am Ganesh Puppala currently working as a Software Engineer at Fiserv India. I have 8 months of software industry experience and completed my B.Tech in Computer Science and Engineering from SRM Institute of Science and Technology, Chennai.
+
+Project Description:
+
+  Build a Vehicle Parking System web application where end users can register vehicles, book/release parking spots, and export their history, while admins manage lots, users, and dashboards.  
+  The backend is Python/Flask with Celery for scheduled jobs and exports. The frontend is a Vue 3 SPA (Vite) that consumes the REST APIs.
+
+Usage of AI:
+
+  Minimal—used only for brainstorming approaches and generating chart ideas when stuck. Implementation was done manually.
+
+Technologies Used:
+
+  Backend: Python 3.10+, Flask, Flask-RESTX, Celery, SQLite, SQLAlchemy helpers, Jinja2 (for legacy templates)
+  Frontend: Node.js 18+, Vite, Vue 3, Axios, Bootstrap 5
+  Auth/Security: Flask-Session, bcrypt, python-dotenv
+  Notifications: SMTP, Google Chat Webhooks
+
+Dependencies (Python):
+
+  Flask, Flask-RESTX, Flask-Session, Celery, redis, bcrypt, python-dotenv, requests, APScheduler (legacy), sqlite3/SQLAlchemy helpers, smtplib/twilio (optional notification services). See requirements.txt for the full list.
+
+Key Directories:
+
+  app.py                     → Flask entry point, blueprint registration, DB bootstrapping
+  controllers/               → Modular route handlers (auth, admin, user APIs)
+  models/                    → SQLite schema helpers and data access functions
+  tasks.py / celery_app.py   → Celery workers for reminders, monthly report emails, CSV export
+  frontend/                  → Vue 3 SPA (src/views for admin/user dashboards, components/navbar, etc.)
+  templates/ + static/       → Server-rendered fallback UI (kept for completeness)
+  exports/                   → Generated CSV files
+  scheduler/                 → (Legacy) APScheduler job definitions – not used after Celery adoption
+
+Environment Variables (via .env):
+
+  SECRET_KEY, SESSION_TYPE, SMTP_HOST/PORT/USER/PASS, GC_WEBHOOK_URL, CELERY_BROKER_URL, CELERY_RESULT_BACKEND, TWILIO_* (optional), DB paths from config.py.
+
+How to Run (summary):
+
+  1. Backend
+     - python3 -m venv venv && source venv/bin/activate
+     - pip install -r requirements.txt
+     - flask --app app.py run (or python app.py)
+  2. Celery workers (for tasks.py jobs)
+     - celery -A celery_app.celery worker --loglevel=info
+     - celery -A celery_app.celery beat --loglevel=info
+  3. Frontend
+     - cd frontend && npm install && npm run dev
+
+Database Schema (SQLite):
+
+  1. Users
+     - user_id INTEGER PK AUTOINCREMENT
+     - email TEXT UNIQUE NOT NULL
+     - password TEXT NOT NULL (bcrypt hash)
+     - name TEXT NOT NULL
+     - address TEXT NOT NULL
+     - pincode TEXT NOT NULL
+     - role TEXT DEFAULT 'user'
+
+  2. ParkingLot
+     - lot_id INTEGER PK AUTOINCREMENT
+     - location_name TEXT NOT NULL
+     - address TEXT NOT NULL
+     - pincode TEXT NOT NULL
+     - price INTEGER NOT NULL (per hour)
+     - maxSpots INTEGER NOT NULL
+
+  3. ParkingSpots
+     - lot_id INTEGER FK → ParkingLot
+     - spot_id INTEGER
+     - status TEXT CHECK('O','A') DEFAULT 'A'
+
+  4. Reserve_Parking_Spot
+     - spot_id INTEGER FK → ParkingSpots
+     - lot_id INTEGER FK → ParkingLot
+     - user_id INTEGER FK → Users
+     - vehicle_number TEXT NOT NULL
+     - parking_timestamp DATETIME NOT NULL
+     - leaving_timestamp DATETIME
+     - parking_cost REAL
+
+  5. Vehicles
+     - user_id INTEGER FK → Users
+     - vehicle_number TEXT UNIQUE NOT NULL
+     - vehicle_status TEXT NOT NULL ('active','inactive')
+
+API Design (high level):
+
+  • Auth (register/login/logout, session-based)
+  • Admin APIs (lots CRUD, spot management, users list, summary metrics)
+  • User APIs (dashboard data, book/release spots, vehicle CRUD, export CSV via Celery)
+  • All endpoints documented in api.yaml.
+
+Architecture & Features:
+
+  • Flask app configured with blueprints (auth/admin/user) and uses SQLite for persistence.
+  • Vue SPA handles all logged-in interactions; it stores session info in browser storage and calls the Flask APIs with credentials.
+  • Celery handles asynchronous jobs: daily reminders, monthly summary emails with charts, and parking history export (CSV saved under exports/ and notification via Google Chat).
+  • Role-based UI: Admin views for lot management; User views for booking, vehicle management, history, and exports.
+  • Charting/analytics implemented on the admin summary page.
+
+DB Schema & ER Diagram:
+
+  (Same as table overview above; ER diagram supplied separately.)
+
+Video Demo:
+
+  https://drive.google.com/file/d/1YTnzLiF2cLZOuedeRNoDOx2GjfAsRVlr/view?usp=sharing
+
+Usage of AI:
+
+  Limited to idea validation and assistance with chart rendering—core logic, routing, database design, and UI flow were implemented manually.
