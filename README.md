@@ -120,35 +120,10 @@ celery -A celery_app.celery beat --loglevel=info
 
 Make sure Redis (or your chosen broker/result backend) is running before starting these processes.
 
----
-
-## 6. Useful Commands
-
-- Reset local database: delete `database/*.db` (removes all data)
-- Format/validate backend: `flake8`, `black` (if installed)
-- Run backend unit tests: `pytest`
-- Generate user CSV export manually: trigger `/api/user/exportCSV` while logged in
-
----
-
 ## 7. Default Credentials
-
 Once seeded, you can log in with the sample admin account:
 
 - Email: `admin@parking.com`
 - Password: `admin@123`
 
-Create new users through the registration form or insert them directly into the SQLite database as needed.
 
----
-
-## 8. Deployment Notes
-
-- Configure production secrets via environment variables (never commit `.env`)
-- Use Gunicorn or another WSGI server for Flask in production
-- Serve the built Vue assets (from `frontend/dist`) via a static host or reverse proxy
-- Run Celery workers via a supervisor (systemd, PM2, Docker, etc.)
-
----
-
-Happy building! Let us know if you need additional setup instructions or automation scripts.
